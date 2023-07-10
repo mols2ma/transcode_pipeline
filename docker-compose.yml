@@ -1,0 +1,8 @@
+services:
+  app:
+    container_name: app
+    image: app
+    build: ./app/
+    volumes:
+      - ./app/src/:/app/src/ # TODO MSA: for dev purposes only, remove before final submission
+      - ./upload/:/app/upload/ # TODO MSA: for dev purposes only, remove before final submission
