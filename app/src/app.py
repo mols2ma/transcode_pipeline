@@ -1,9 +1,13 @@
 from utils import *
-from ingestion import Ingestor
-from data_processor import DataProcessor
+from ingestion import Pipeline
+from data_processor import *
+
 
 if __name__ == "__main__":
 
-    logging.info("Transcoder pipeline is ready...")
 
-    ingestor = Ingestor() # TODO MSA: reconsider if this needs to be a class or a function
+    logging.info("Transcoder pipeline is ready...")
+    Session = init_db()
+
+    pipeline_status = Pipeline(session_db=Session()) # TODO MSA: reconsider if this needs to be a class or a function
+    

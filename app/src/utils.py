@@ -6,6 +6,7 @@ from watchdog.events import FileSystemEventHandler
 from watchdog.observers import Observer
 from transcoder import Transcoder
 from data_processor import DataProcessor
+import traceback
 
 logger = logging
 logging.basicConfig(level=logging.INFO,
@@ -29,11 +30,13 @@ def validate_video(file_path):
     except Exception as e:
         raise Exception(e)
 
-def trigger_pipeline(file_path):
+def trigger_pipeline(file_path, session_db):
     try:
         validate_video(file_path)
         logging.info(f"Detected and validated video file at {file_path}")
 
         transcoder = Transcoder(file_path) # TODO MSA: refactor to consider continuation of class or method
+
+        result = DataProcessor(file_path, session_db) # TODO MSA: refactor to consider continuation of class or method
     except Exception as e:
-        logging.info(f"Pipeline error: {e}")
+        logging.info(f"Pipeline error: {e}\n{traceback.format_exc()}")

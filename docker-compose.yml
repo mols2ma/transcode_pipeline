@@ -3,7 +3,16 @@ services:
     container_name: app
     image: app
     build: ./app/
+    env_file:
+      - ./variables.env
     volumes:
       - ./app/src/:/app/src/ # TODO MSA: for dev purposes only, remove before final submission
       - ./upload/:/app/upload/ # TODO MSA: for dev purposes only, remove before final submission
       - ./completed/:/app/completed/ # TODO MSA: for dev purposes only, remove before final submission
+  db:
+    container_name: db
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    env_file:
+      - ./variables.env

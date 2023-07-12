@@ -2,22 +2,25 @@ from utils import *
 
 class IngestionHandler(FileSystemEventHandler):
 
-    def on_created(self, event):
-        """Overrides on_created class within FileSystemEventHandler. Called when a file or directory is created.
-        Assumes event represents a single file creation."""
-
-        trigger_pipeline(event.src_path)
-
-class Ingestor:
+    def __init__(self, session):
+        self.database_session = session
 
     upload_path = "../upload/"
 
-    def __init__(self):
+    def on_created(self, event): # TODO MSA: watch if on_created gets called twice when adding video to folder
+        """Overrides on_created class within FileSystemEventHandler. Called when a file or directory is created.
+        Assumes event represents a single file creation."""
 
-        event_handler = IngestionHandler()
+        trigger_pipeline(event.src_path, self.database_session)
+
+class Pipeline:
+
+    def __init__(self, session_db):
+
+        event_handler = IngestionHandler(session_db)
 
         observer = Observer()
-        observer.schedule(event_handler, Ingestor.upload_path, recursive=True)
+        observer.schedule(event_handler, IngestionHandler.upload_path, recursive=True)
         observer.start()
 
         try:
