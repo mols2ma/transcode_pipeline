@@ -45,3 +45,34 @@ class DataProcessor:
         
         self.database_session = session
         self.file_path = file_path
+
+        self.insert_tmdb_metadata(self.fetch_tmdb_metadata())
+        self.log_video()
+
+    def build_video_log_query(self, file_path):
+        return VideoLog(imdb_id=os.path.splitext(os.path.basename(self.file_path))[0], date_processed=d.datetime.now().strftime("%Y-%m-%d  %H:%M:%S"))
+    
+    def log_video(self): # TODO MSA: add self to class methods
+        logging.info("Putting video info into DB...")
+
+        movie_metadata = self.build_video_log_query(self.file_path)
+        self.database_session.add(movie_metadata)
+        self.database_session.commit()
+        logging.info(f'Added transcoded video info to video_log table.')
+    
+    def insert_tmdb_metadata(self, metadata):
+        tmdb_metadata = TmdbMetadata(id=os.path.splitext(os.path.basename(self.file_path))[0], title_metadata=metadata)
+        self.database_session.add(tmdb_metadata)
+        self.database_session.commit()
+        logging.info(f'Added TMDB info to tmdb_metadata table.')
+    
+    def fetch_tmdb_metadata(self):
+        logging.info("Fetching info from TMDB...")
+
+        tmdb.API_KEY = os.environ.get('TMDB_API_KEY')
+        tmdb.REQUESTS_TIMEOUT = 5
+        tmdb.REQUESTS_SESSION = requests.Session()
+        movie = tmdb.Movies(os.path.splitext(os.path.basename(self.file_path))[0])
+        return(movie.info())
+
+
