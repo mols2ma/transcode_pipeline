@@ -15,12 +15,6 @@ class IngestionHandler(FileSystemEventHandler):
         self.database_session = session
         self.last_file = ''
 
-    # def on_any_event(self, event):
-    #     logger.error(event.event_type)
-    #     logger.error(event.is_directory)
-    #     logger.error(event.src_path)
-    #     print("\n")
-
     def on_created(self, event):
         """Assumes event represents a single file creation."""
 
@@ -70,4 +64,4 @@ class Pipeline:
             logging.info(f"Pipeline error: {e}\n{traceback.format_exc()}")
 
         logging.info("----- PIPELINE FINISHED.  -----")
-        logging.info("Listening for folder changes in '~/app/src/upload'...")
+        logging.info("Listening for folder changes in '/app/upload'...")
