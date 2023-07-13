@@ -1,4 +1,8 @@
 from utils import *
+from watchdog.observers import Observer
+from watchdog.events import FileSystemEventHandler
+from transcoder import Transcoder
+from data_processor import DataProcessor
 
 
 class IngestionHandler(FileSystemEventHandler):
@@ -19,8 +23,6 @@ class Pipeline:
 
     def __init__(self, session_db):
         self.sesssion_db = session_db
-
-        self.start_ingestion()
 
     def start_ingestion(self):
         event_handler = IngestionHandler(self, self.sesssion_db)
@@ -45,8 +47,14 @@ class Pipeline:
         try:
             validate_video(file_path)
             logging.info(f"Detected and validated video file at {file_path}")
-            transcoder = Transcoder(file_path)
-            result = DataProcessor(file_path, session_db)
+
+            t = Transcoder(file_path)
+            t.transcode()
+
+            d = DataProcessor(file_path, session_db)
+            d.insert_tmdb_metadata(d.fetch_tmdb_metadata())
+            d.insert_video_log()
+
         except Exception as e:
             logging.info(f"Pipeline error: {e}\n{traceback.format_exc()}")
 

@@ -14,21 +14,22 @@ class Transcoder:
     }
 
     def __init__(self, file_path):
-        inputPath = file_path
-        outputPath = f"../completed/{os.path.basename(file_path)}"
+        self.inputPath = file_path
+        self.outputPath = f"../completed/{os.path.basename(file_path)}"
 
-        ffInput = ffmpeg.input(inputPath)
+    def transcode(self):
+
+        ffInput = ffmpeg.input(self.inputPath)
         ffOutput = ffInput.output(
-            outputPath,
+            self.outputPath,
             **Transcoder.params
         )
         ffOutput = ffOutput.global_args('-loglevel', 'error')
 
         try:
-            logging.info(f"Transcoding video...")
+            logging.info(f"Transcoding video... (May take a few seconds)")
             ffOutput.run(overwrite_output=True)
             logging.info(
-                f"Transcoding complete. Transcoded video is located at {outputPath}.")
-            # return valuable info that can be used in post_process_video
+                f"Transcoding complete. Transcoded video is located at {self.outputPath}.")
         except Exception as e:
             logging.error(e.stderr)
