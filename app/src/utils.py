@@ -8,6 +8,8 @@ from transcoder import Transcoder
 from data_processor import DataProcessor
 import traceback
 
+# TODO MSA: create util class objects for each component of pipeline
+
 logger = logging
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s - %(message)s',
@@ -29,6 +31,16 @@ def validate_video(file_path):
             raise Exception(f"File at {file_path} is not of type is not of video.")
     except Exception as e:
         raise Exception(e)
+
+"""
+If yes then add function or logic to check if its a valid imdbid file name
+    (IMDb's identifiers always take the form of two letters, which signify the type of entity being identified, 
+        followed by a sequence of at least seven numbers that uniquely identify a specific entity of that type.
+            https://developer.imdb.com/documentation/key-concepts
+            https://stackoverflow.com/questions/57746487/how-to-run-the-regexmatchingeventhandler-of-watchdog-correctly)
+"""
+def is_tmdb_id():
+    return
 
 def trigger_pipeline(file_path, session_db):
     try:
