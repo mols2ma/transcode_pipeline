@@ -1,14 +1,4 @@
 services:
-  app:
-    container_name: app
-    image: app
-    build: ./app/
-    env_file:
-      - ./variables.env
-    volumes:
-      - ./app/src/:/app/src/ # TODO MSA: for dev purposes only, remove before final submission
-      - ./upload/:/app/upload/ # TODO MSA: for dev purposes only, remove before final submission
-      - ./completed/:/app/completed/ # TODO MSA: for dev purposes only, remove before final submission
   db:
     container_name: db
     image: postgres:latest
@@ -21,3 +11,17 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+
+  app:
+    container_name: app
+    image: app
+    build: ./app/
+    env_file:
+      - ./variables.env
+    depends_on:
+      db:
+        condition: service_healthy # Wait for database to be healthy before starting app
+    volumes:
+      - ./app/src/:/app/src/ # TODO MSA: for dev purposes only, remove before final submission
+      - ./upload/:/app/upload/ # TODO MSA: for dev purposes only, remove before final submission
+      - ./completed/:/app/completed/ # TODO MSA: for dev purposes only, remove before final submission

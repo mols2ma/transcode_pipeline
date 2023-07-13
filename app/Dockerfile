@@ -12,5 +12,6 @@ RUN apt-get update -qq && apt-get install ffmpeg -y
 RUN mkdir upload
 RUN mkdir completed
 
-# CMD [ "python", "-u", "app.py"] # TODO MSA: uncomment for final submission: auto runs app at start of container
-CMD ["sleep", "infinity"] # keeps container running indefinitely
+WORKDIR /app/src
+
+CMD [ "python", "-u", "app.py"]
