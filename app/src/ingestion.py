@@ -1,3 +1,4 @@
+import traceback
 from utils import *
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
@@ -58,4 +59,5 @@ class Pipeline:
         except Exception as e:
             logging.info(f"Pipeline error: {e}\n{traceback.format_exc()}")
 
-        logging.info("----- PIPELINE FINISHED.  -----")
+        logging.info(
+            "----- PIPELINE FINISHED.  -----\nListening for folder changes in '~/app/src/upload'...")
