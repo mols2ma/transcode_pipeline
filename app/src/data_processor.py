@@ -53,7 +53,7 @@ class DataProcessor:
     def build_video_log_query(self, file_path):
         return VideoLog(imdb_id=os.path.splitext(os.path.basename(self.file_path))[0], file_name=os.path.basename(self.file_path), date_processed=d.datetime.now().strftime("%Y-%m-%d  %H:%M:%S"))
     
-    def log_video(self): # TODO MSA: add self to class methods
+    def log_video(self):
         logging.info("Putting video info into DB...")
 
         movie_metadata = self.build_video_log_query(self.file_path)
