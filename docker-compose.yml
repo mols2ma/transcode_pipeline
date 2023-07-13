@@ -21,7 +21,3 @@ services:
     depends_on:
       db:
         condition: service_healthy # Wait for database to be healthy before starting app
-    volumes:
-      - ./app/src/:/app/src/ # TODO MSA: for dev purposes only, remove before final submission
-      - ./upload/:/app/upload/ # TODO MSA: for dev purposes only, remove before final submission
-      - ./completed/:/app/completed/ # TODO MSA: for dev purposes only, remove before final submission
