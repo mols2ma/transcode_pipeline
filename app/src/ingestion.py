@@ -8,23 +8,26 @@ from data_processor import DataProcessor
 
 class IngestionHandler(FileSystemEventHandler):
 
+    upload_path = "../upload/"
+
     def __init__(self, pipeline, session):
         self.pipeline = pipeline
         self.database_session = session
-
-    upload_path = "../upload/"
+        self.last_file = ''
 
     # def on_any_event(self, event):
     #     logger.error(event.event_type)
     #     logger.error(event.is_directory)
     #     logger.error(event.src_path)
-
-    # TODO MSA: needs to be looked at
+    #     print("\n")
 
     def on_created(self, event):
         """Assumes event represents a single file creation."""
 
-        self.pipeline.trigger_pipeline(event.src_path, self.database_session)
+        if event.src_path != self.last_file:
+            self.last_file = event.src_path
+            self.pipeline.trigger_pipeline(
+                event.src_path, self.database_session)
 
 
 class Pipeline:
@@ -66,5 +69,5 @@ class Pipeline:
         except Exception as e:
             logging.info(f"Pipeline error: {e}\n{traceback.format_exc()}")
 
-        logging.info(
-            "----- PIPELINE FINISHED.  -----\nListening for folder changes in '~/app/src/upload'...")
+        logging.info("----- PIPELINE FINISHED.  -----")
+        logging.info("Listening for folder changes in '~/app/src/upload'...")
