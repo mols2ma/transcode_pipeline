@@ -34,3 +34,24 @@ Look at `app` container's logs to see real-time logging of app. Upon startup of 
 
 3. Pipeline will detect new file, start pipeline, and display logs as pipeline runs. Logger will first display `----- PIPELINE STARTED... -----` once a file has been uploaded. Note that a logged error message `Pipeline error: <ERROR MESSAGE>` will stop the pipeline instance for that video upload.
 4. Once the pipeline successfully runs, the transcoded video will be exported to the folder, `app/completed`, which is also within the `app` container's filesystem.
+
+## Architecture and Implementation Choices
+
+![Architectural Diagram](Architectural_Diagram.jpg "Architectural Diagram")
+
+### Tech Stack:
+
+Main Application: **_Python_**
+Database: **PostgreSQL**
+External Database: **TMDB**
+External Libraries: **FFmpeg**
+Python Libraries:
+
+- [ffmpeg-python](https://github.com/kkroening/ffmpeg-python)
+  - Utilizing a Python wrapper for FFmpeg allows for ease of implementation and readability in the code.
+- [watchdog](https://github.com/gorakhargosh/watchdog)
+  - Utilizing library to handle file detection for filesystem folders. It provides directory and single file detection.
+- [tmdbsimple](https://github.com/celiao/tmdbsimple)
+  - Initially utilized `requests` library, however, `tmdbsimple` showed to be a cleaner Python wrapper which utilized Python Objects to represent movies. This conformed better with using SQLAlchemy which is an orm.
+- [sqlalchemy](https://www.sqlalchemy.org/)
+  - `SQLAlchemy` is a common Python toolkit and ORM for SQL. It is easier to implement for a demo-level project, and it allows easier inserts into the db.
