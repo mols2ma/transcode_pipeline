@@ -14,6 +14,13 @@ class IngestionHandler(FileSystemEventHandler):
 
     upload_path = "../upload/"
 
+    # def on_any_event(self, event):
+    #     logger.error(event.event_type)
+    #     logger.error(event.is_directory)
+    #     logger.error(event.src_path)
+
+    # TODO MSA: needs to be looked at
+
     def on_created(self, event):
         """Assumes event represents a single file creation."""
 
@@ -35,7 +42,7 @@ class Pipeline:
 
         try:
             logging.info(
-                "Listening for folder changes in '~/app/src/upload'...")
+                "Listening for folder changes in '/app/upload'...")
             while observer.is_alive():
                 observer.join(1)
         finally:

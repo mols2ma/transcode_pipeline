@@ -37,7 +37,7 @@ class DataProcessor:
         return VideoLog(imdb_id=os.path.splitext(os.path.basename(self.file_path))[0], file_name=os.path.basename(self.file_path), date_processed=d.datetime.now().strftime("%Y-%m-%d  %H:%M:%S"))
 
     def insert_video_log(self):
-        logging.info("Putting video info into DB...")
+        logging.info("Putting TMDB video info into database...")
 
         movie_metadata = self.build_video_log_query(self.file_path)
         self.database_session.add(movie_metadata)
