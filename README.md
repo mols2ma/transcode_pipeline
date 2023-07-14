@@ -16,10 +16,6 @@
 
 2. Go to `app` container in created `transcode pipeline` container stack in Docker Desktop.
 
-3. Go to the **Files** tab and navigate to `/app/upload/`.
-
-The transcoder pipeline app should be running and listening for video uploads to folder, `/app/upload`, within `app` container's file system, _not_ the host filesystem. This is to keep the application running completely within the Docker container.
-
 Look at `app` container's logs to see real-time logging of app. Upon startup of `app` container, it should display in the **Logs** tab the following message:
 
 ```
@@ -29,6 +25,10 @@ Look at `app` container's logs to see real-time logging of app. Upon startup of 
 2023-07-13 14:42:33 - Listening for folder changes in '/app/upload'...
 
 ```
+
+3. Go to the **Files** tab and navigate to `/app/upload/`.
+
+The transcoder pipeline app should be running and listening for video uploads to folder, `/app/upload`, within `app` container's file system, _not_ the host filesystem. This is to keep the application running completely within the Docker container.
 
 ## How To Use App
 
