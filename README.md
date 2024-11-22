@@ -1,15 +1,5 @@
 # transcode_pipeline
 
-## How to Run App in Docker Desktop
-
-### One-Time Initial Environment Set-up
-
-1. Rename `variables.env.template` to `variables.env`.
-
-1. Retrieve environment variables from developer (Monica Andres).
-
-1. Fill in environment variables with respective values.
-
 ### Run Docker Container
 
 1. In the CLI run `docker-compose up --build --detach`. (`--build` can be omitted after the first run once images are built)
@@ -26,9 +16,9 @@ Look at `app` container's logs to see real-time logging of app. Upon startup of 
 
 ```
 
-3. Go to the **Files** tab and navigate to `/app/upload/`.
+3. Go to the **Files** tab and navigate to `/app/files/upload/`.
 
-The transcoder pipeline app should be running and listening for video uploads to folder, `/app/upload`, within `app` container's file system, _not_ the host filesystem. This is to keep the application running completely within the Docker container.
+The transcoder pipeline app should be running and listening for video uploads to folder, `/app/files/upload`, within `app` container's file system.
 
 ## How To Use App
 
