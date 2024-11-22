@@ -39,7 +39,7 @@ The transcoder pipeline app should be running and listening for video uploads to
 
 3. Pipeline will detect new file, start pipeline, and display logs as pipeline runs. Logger will first display `----- PIPELINE STARTED... -----` once a file has been uploaded. Note that a logged error message `Pipeline error: <ERROR MESSAGE>` will stop the pipeline instance for that video upload.
 
-4. Once the pipeline successfully runs, the transcoded video will be exported to the folder, `app/completed`, which is also within the `app` container's filesystem.
+4. Once the pipeline successfully runs, the transcoded video will be exported to the folder, `app/files/completed`, which is also within the `app` container's filesystem.
 
 ## Architecture and Implementation Choices
 

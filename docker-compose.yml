@@ -21,3 +21,14 @@ services:
     depends_on:
       db:
         condition: service_healthy # Wait for database to be healthy before starting app
+    volumes:
+      - files:/transcode_pipeline_app/files
+      - type: bind
+        source: ./app/files
+        target: /transcode_pipeline_app/files
+      - type: bind
+        source: ./app/src/
+        target: /transcode_pipeline_app/src
+
+volumes:
+  files:

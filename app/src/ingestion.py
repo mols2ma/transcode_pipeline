@@ -8,7 +8,7 @@ from data_processor import DataProcessor
 
 class IngestionHandler(FileSystemEventHandler):
 
-    upload_path = "../upload/"
+    upload_path = "files/upload/"
 
     def __init__(self, pipeline, session):
         self.pipeline = pipeline
@@ -38,8 +38,7 @@ class Pipeline:
         observer.start()
 
         try:
-            logging.info(
-                "Listening for folder changes in '/app/upload'...")
+            logging.info("Listening for folder changes in '/app/files/upload'...\n\n")
             while observer.is_alive():
                 observer.join(1)
         finally:
@@ -47,6 +46,8 @@ class Pipeline:
             observer.join()
 
     def trigger_pipeline(self, file_path, session_db):
+        logging.info("Listening for folder changes in '/app/files/upload'...\n\n")
+
         logging.info("----- PIPELINE STARTED... -----")
 
         try:
@@ -60,8 +61,8 @@ class Pipeline:
             d.insert_tmdb_metadata(d.fetch_tmdb_metadata())
             d.insert_video_log()
 
+            logging.info("----- PIPELINE FINISHED.  -----\n\n")
         except Exception as e:
-            logging.info(f"Pipeline error: {e}\n{traceback.format_exc()}")
+            logging.error(f"Pipeline ereewwror: {e}\n{traceback.format_exc()}")
+            logging.error("----- PIPELINE UNSUCCESSFUL.  -----\n\n")
 
-        logging.info("----- PIPELINE FINISHED.  -----")
-        logging.info("Listening for folder changes in '/app/upload'...")

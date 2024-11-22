@@ -15,7 +15,7 @@ class Transcoder:
 
     def __init__(self, file_path):
         self.inputPath = file_path
-        self.outputPath = f"../completed/{os.path.basename(file_path)}"
+        self.outputPath = f"files/completed/{os.path.basename(file_path)}"
 
     def transcode(self):
 
